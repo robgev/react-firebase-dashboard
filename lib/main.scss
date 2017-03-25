@@ -1,6 +1,10 @@
 $font : 'Roboto', sans-serif;
 $fontSize : 17px;
 $backColor : #F2F2F2;
+$listItemSize: 19px;
+$textColor : #464646;
+$backColor : #F2F2F2;
+$borderColor : #BCBCBC;
 
 * {
   font-family: $font;
@@ -14,6 +18,50 @@ html, body {
   background-color: $backColor;
 }
 
-.hello {
-  color: red;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 23%;
+  margin: 50px auto;
+  h2 {
+    font-size: 35px;
+    color: $textColor;
+    font-weight: 400;
+    text-align: center;
+  }
+  input {
+    width: 100%;
+    font-size: $fontSize;
+    padding: 8px;
+    margin: 20px 0;
+    background-color: $backColor;
+    border: 2px solid #C6C6C6;
+    border-radius: 3px;
+  }
+  .wrapper {
+    width: 100%;
+    button {
+      display: inline-flex;
+      width: 85px;
+      height: 36px;
+      background: 0 0;
+      border: none;
+      border-radius: 2px;
+      color: black;
+      margin: 0;
+      padding: 0 16px;
+      font-family: $font;
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      outline: none;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      line-height: 36px;
+    }
+  }
 }
