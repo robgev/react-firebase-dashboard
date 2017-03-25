@@ -19,7 +19,10 @@ class App extends Component {
     return (
       <div className='container'>
         <h2>Apollo Bytes SignIn</h2>
-        <SigninBox submit={signin.handleSignIn}/>
+        <SigninBox
+          submit={signin.handleSignIn}
+          signUp={signin.handleSignUp}
+        />
       </div>
     );
   }

@@ -25,6 +25,11 @@ class SigninBox extends Component {
     this.props.submit(email, password);
   }
 
+  handleSignUp = () => {
+    const { email, password } = this.state;
+    this.props.signUp(email, password);
+  }
+
   render() {
     const { email, password } = this.state;
     return (
@@ -32,6 +37,7 @@ class SigninBox extends Component {
         <input type='text' placeholder='Email'  onChange={this.mailChangeHandler} />
         <input type='password' placeholder='Password'  onChange={this.passChangeHandler} />
         <button onClick={this.handleSignIn}>Sign In</button>
+        <button onClick={this.handleSignUp}>Sign Up</button>
       </div>
     );
   }
