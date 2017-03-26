@@ -26,9 +26,6 @@ class App extends Component {
       if (currentUser) {
         this.setState({...this.state, currentUser})
         const { displayName, email, emailVerified, photoURL, uid, providerData } = currentUser;
-        if (!emailVerified) {
-          sendEmailVerification();
-        }
       }
       else {
         const currentUser = null;
@@ -55,18 +52,22 @@ class App extends Component {
             <Route
               path="/user"
               render={ props =>
+                currentUser ?
                 <User
                   user = {currentUser}
                   {...props}
-                /> }
+                /> : null //avoiding unauthorized render messing up
+              }
             />
             <Route
               path="/admin"
               render={ props =>
+                currentUser ?
                 <AdminPanel
                   user = {currentUser}
                   {...props}
-                /> }
+                /> : null
+              }
             />
           </div>
         </Router>

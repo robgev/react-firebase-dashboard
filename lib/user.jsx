@@ -11,11 +11,10 @@ class User extends Component {
 
   render() {
     const { user } = this.props;
-     const { displayName, email, emailVerified, photoURL, uid, providerData } = user;
     return (
       <div className="full-width">
         <Header user={user} />
-        <div style={{height: '500px'}}>
+        <div style={{height: '89.3vh'}}>
 
         </div>
         <Footer />

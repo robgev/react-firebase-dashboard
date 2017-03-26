@@ -7,7 +7,7 @@ const ui = {
 }
 
 export default ({ user }) => {
-  console.log(JSON.stringify(user))
+  const { displayName, email, emailVerified, photoURL, uid, providerData } = user;
   const links = [ui.home, ui.about];
   const listItems = links.map(currentItem => {
     return (
@@ -25,8 +25,9 @@ export default ({ user }) => {
         <ul style={topMenuListStyle}>
           {listItems}
         </ul>
-        <div className={'push-right'}>
-          <p>{`Hello 11`}</p>
+        <div className="user-info">
+          <p>{`Hello ${displayName}`}</p>
+          <img src={photoURL} className="user-pic" />
         </div>
       </div>
     </div>

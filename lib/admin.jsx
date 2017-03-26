@@ -10,9 +10,13 @@ class AdminPanel extends Component {
   }
 
   render() {
+    const { user } = this.props;
     return (
       <div className="full-width">
-        <Header />
+        <Header user={user} />
+        <div style={{height: '89.3vh'}}>
+
+        </div>
         <Footer />
       </div>
     );

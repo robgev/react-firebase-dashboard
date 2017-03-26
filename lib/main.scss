@@ -73,6 +73,18 @@ a {
     .full-width {
       width: 100%;
     }
+    .user-info {
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: right;
+      .user-pic {
+        height: 30px;
+        width: 30px;
+        margin: 0 20px;
+      }
+    }
   }
   .wrapper {
     width: 100%;
