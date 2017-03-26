@@ -4,13 +4,15 @@ import firebase from 'firebase';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Switch,
 } from 'react-router-dom';
 
 import signin from './firebaseSigninAPI';
 import SigninBox from './signin';
 import AdminPanel from './admin';
 import User from './user';
+import NotFound from './components/notfound'
 import './main.scss';
 
 class App extends Component {
@@ -40,35 +42,38 @@ class App extends Component {
       <div className='container'>
         <Router>
           <div className='router-wrapper'>
-            <Route
-              path="/signin"
-              render={ props =>
-                <SigninBox
-                  submit={signin.handleSignIn}
-                  signUp={signin.handleSignUp}
-                  {...props}
-                /> }
-            />
-            <Route
-              path="/user"
-              render={ props =>
-                currentUser ?
-                <User
-                  user = {currentUser}
-                  {...props}
-                /> : null //avoiding unauthorized render messing up
-              }
-            />
-            <Route
-              path="/admin"
-              render={ props =>
-                currentUser ?
-                <AdminPanel
-                  user = {currentUser}
-                  {...props}
-                /> : null
-              }
-            />
+            <Switch>
+              <Route
+                path="/signin"
+                render={ props =>
+                  <SigninBox
+                    submit={signin.handleSignIn}
+                    signUp={signin.handleSignUp}
+                    {...props}
+                  /> }
+              />
+              <Route
+                path="/user"
+                render={ props =>
+                  currentUser ?
+                  <User
+                    user = {currentUser}
+                    {...props}
+                  /> : null //avoiding unauthorized render messing up
+                }
+              />
+              <Route
+                path="/admin"
+                render={ props =>
+                  currentUser ?
+                  <AdminPanel
+                    user = {currentUser}
+                    {...props}
+                  /> : null
+                }
+              />
+              <Route component={NotFound} />
+            </Switch>
           </div>
         </Router>
       </div>

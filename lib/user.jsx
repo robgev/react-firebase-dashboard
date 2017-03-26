@@ -14,7 +14,7 @@ class User extends Component {
     return (
       <div className="full-width">
         <Header user={user} />
-        <div style={{height: '89.3vh'}}>
+        <div style={{height: '90vh'}}>
 
         </div>
         <Footer />
