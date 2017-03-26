@@ -33,11 +33,14 @@ class SigninBox extends Component {
   render() {
     const { email, password } = this.state;
     return (
-      <div className='wrapper'>
-        <input type='text' placeholder='Email'  onChange={this.mailChangeHandler} />
-        <input type='password' placeholder='Password'  onChange={this.passChangeHandler} />
-        <button onClick={this.handleSignIn}>Sign In</button>
-        <button onClick={this.handleSignUp}>Sign Up</button>
+      <div className="signin">
+        <h2>Apollo Bytes SignIn</h2>
+        <div className='wrapper'>
+          <input type='text' placeholder='Email'  onChange={this.mailChangeHandler} />
+          <input type='password' placeholder='Password'  onChange={this.passChangeHandler} />
+          <button onClick={this.handleSignIn}>Sign In</button>
+          <button onClick={this.handleSignUp}>Sign Up</button>
+        </div>
       </div>
     );
   }

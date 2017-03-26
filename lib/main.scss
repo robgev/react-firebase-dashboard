@@ -18,13 +18,41 @@ html, body {
   background-color: $backColor;
 }
 
+.push-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.divisor {
+  border-right: 1px solid #E6E7E8;
+}
+
+.centerV {
+  display: flex;
+  align-items: center;
+}
+
+.material-icons {
+  padding: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 23%;
-  margin: 50px auto;
+  width: 100%;
+  .signin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 23%;
+    margin: 50px auto;
+  }
   h2 {
     font-size: 35px;
     color: $textColor;
@@ -39,6 +67,12 @@ html, body {
     background-color: $backColor;
     border: 2px solid #C6C6C6;
     border-radius: 3px;
+  }
+  .router-wrapper {
+    width: 100%;
+    .full-width {
+      width: 100%;
+    }
   }
   .wrapper {
     width: 100%;
