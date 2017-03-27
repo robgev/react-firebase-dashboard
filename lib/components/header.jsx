@@ -6,7 +6,7 @@ const ui = {
   about: {resource: '/about', link:'about', iconName: 'help' }
 }
 
-export default ({ user }) => {
+export default ({ user, signOut }) => {
   const { displayName, email, emailVerified, photoURL, uid, providerData } = user;
   const links = [ui.home, ui.about];
   const listItems = links.map(currentItem => {
@@ -28,6 +28,7 @@ export default ({ user }) => {
         <div className="user-info">
           <p>{`Hello ${displayName}`}</p>
           <img src={photoURL} className="user-pic" />
+          <button onClick={signOut}>Sign Out</button>
         </div>
       </div>
     </div>

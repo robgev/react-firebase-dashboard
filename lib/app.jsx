@@ -46,11 +46,12 @@ class App extends Component {
               <Route
                 path="/signin"
                 render={ props =>
+                  !currentUser ?
                   <SigninBox
                     submit={signin.handleSignIn}
                     signUp={signin.handleSignUp}
                     {...props}
-                  /> }
+                  /> : null }
               />
               <Route
                 path="/user"
@@ -58,6 +59,7 @@ class App extends Component {
                   currentUser ?
                   <User
                     user = {currentUser}
+                    signOut={signin.handleSignOut}
                     {...props}
                   /> : null //avoiding unauthorized render messing up
                 }

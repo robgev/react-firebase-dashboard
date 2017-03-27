@@ -13,7 +13,10 @@ class User extends Component {
     const { user } = this.props;
     return (
       <div className="full-width">
-        <Header user={user} />
+        <Header
+          user={user}
+          signOut={this.props.signOut} 
+        />
         <div style={{height: '90vh'}}>
 
         </div>
