@@ -41,15 +41,34 @@ a {
   color: white;
 }
 
+@mixin btnStyle {
+  display: inline-flex;
+  justify-content: center;
+  height: 95%;
+  border: none;
+  border-radius: 2px;
+  color: black;
+  padding: 0 16px;
+  font-family: $font;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@mixin centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   width: 100%;
   .signin {
-    display: flex;
+    @include centered;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 23%;
     margin: 50px auto;
   }
@@ -73,6 +92,39 @@ a {
     .full-width {
       width: 100%;
     }
+    .userContainer {
+      .user-body {
+        @include centered;
+        justify-content: space-around;
+        height: 90vh;
+        .image {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          img {
+            height: 50vh;
+          }
+          button {
+            @include btnStyle;
+            background-color: #E57373;
+            height: 50px;
+            font-size: 25px;
+            width: 50%
+          }
+        }
+        .editableData {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 40%;
+          button {
+            @include btnStyle;
+            height: 50px;
+            width: 30%;
+          }
+        }
+      }
+    }
     .user-info {
       display: flex;
       flex: 1;
@@ -85,17 +137,7 @@ a {
         margin: 0 20px;
       }
       button {
-        display: inline-flex;
-        height: 95%;
-        border: none;
-        border-radius: 2px;
-        color: black;
-        padding: 0 16px;
-        font-family: $font;
-        font-size: 14px;
-        font-weight: 500;
-        text-transform: uppercase;
-        cursor: pointer;
+        @include btnStyle;
       }
     }
   }

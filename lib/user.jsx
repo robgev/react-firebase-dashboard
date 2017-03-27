@@ -11,14 +11,24 @@ class User extends Component {
 
   render() {
     const { user } = this.props;
+    const { displayName, email, emailVerified, photoURL, uid, providerData } = user;
     return (
-      <div className="full-width">
+      <div className="userContainer full-width">
         <Header
           user={user}
-          signOut={this.props.signOut} 
+          signOut={this.props.signOut}
         />
-        <div style={{height: '90vh'}}>
-
+        <div className="user-body">
+          <div className="image">
+            <img src={photoURL} />
+            <button>Delete Account</button>
+          </div>
+          <div className="editableData">
+            <input type='text' placeholder={displayName} />
+            <input type='password' placeholder={email} />
+            <input type='password' placeholder='Password' />
+            <button>Save</button>
+          </div>
         </div>
         <Footer />
       </div>
