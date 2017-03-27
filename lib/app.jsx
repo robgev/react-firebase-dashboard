@@ -6,6 +6,7 @@ import {
   Route,
   Link,
   Switch,
+  Redirect,
 } from 'react-router-dom';
 
 import signin from './firebaseSigninAPI';
@@ -44,6 +45,14 @@ class App extends Component {
           <div className='router-wrapper'>
             <Switch>
               <Route
+                exact path="/"
+                render={() =>
+                currentUser ?
+                    <Redirect to="/user"/>
+                  : <Redirect to="/signin"/>
+                }
+              />
+              <Route
                 path="/signin"
                 render={ props =>
                   !currentUser ?
@@ -51,7 +60,9 @@ class App extends Component {
                     submit={signin.handleSignIn}
                     signUp={signin.handleSignUp}
                     {...props}
-                  /> : null }
+                  /> :
+                  <Redirect to="/user"/>
+                 }
               />
               <Route
                 path="/user"
@@ -61,7 +72,8 @@ class App extends Component {
                     user = {currentUser}
                     signOut={signin.handleSignOut}
                     {...props}
-                  /> : null //avoiding unauthorized render messing up
+                  /> :
+                  <Redirect to="/signin"/>  //avoiding unauthorized render messing up
                 }
               />
               <Route
@@ -71,7 +83,8 @@ class App extends Component {
                   <AdminPanel
                     user = {currentUser}
                     {...props}
-                  /> : null
+                  /> :
+                  <Redirect to="/signin"/>
                 }
               />
               <Route component={NotFound} />
