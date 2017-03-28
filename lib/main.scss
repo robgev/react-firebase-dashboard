@@ -7,6 +7,8 @@ $backColor : #F2F2F2;
 $borderColor : #BCBCBC;
 $mGreen : #43A047;
 $mRed : #E57373;
+$mBlue : #039BE5;
+$mBlueHover: #4FC3F7;
 
 * {
   font-family: $font;
@@ -64,6 +66,20 @@ a {
   justify-content: center;
 }
 
+@mixin banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 50px;
+  margin: 20px auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: white;
+  background-color: $mGreen;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -72,7 +88,16 @@ a {
     @include centered;
     flex-direction: column;
     width: 23%;
+    height: 100vh;
     margin: 50px auto;
+    a {
+      display: inline-flex;
+      color: $mBlue;
+      cursor: pointer;
+      &:hover {
+        color: $mBlueHover;
+      }
+    }
   }
   h2 {
     font-size: 35px;
@@ -96,17 +121,7 @@ a {
     }
     .userContainer {
       .banner {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 90%;
-        height: 50px;
-        margin: 20px auto;
-        position: absolute;
-        left: 0;
-        right: 0;
-        color: white;
-        background-color: $mGreen;
+        @include banner;
       }
       .user-body {
         @include centered;
@@ -118,6 +133,7 @@ a {
           align-items: center;
           img {
             height: 50vh;
+            width: 50vw;
           }
           button {
             @include btnStyle;
@@ -133,6 +149,68 @@ a {
           flex-direction: column;
           align-items: center;
           width: 40%;
+          button {
+            @include btnStyle;
+            height: 50px;
+            width: 30%;
+          }
+          .form-group {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            label {
+              display: flex;
+              flex: 3;
+            }
+            input {
+              display: flex;
+              flex: 8;
+            }
+            .form-password {
+              display: flex;
+              flex: 8;
+              input {
+                display: flex;
+                flex: 1;
+                &#password {
+                  margin-right: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .adminContainer {
+      .banner {
+        @include banner;
+      }
+      .admin-body {
+        @include centered;
+        flex-direction: column;
+        height: 90vh;
+        width: 90vw;
+        margin: 0px auto;
+        .buttons {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          width: 100%;
+          margin-bottom: 15px;
+          button {
+            @include btnStyle;
+            height: 50px;
+            font-size: 2em;
+            margin-left: 10px;
+          }
+        }
+        .table-body {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          border: 1px solid black;
+          height: 80vh;
           button {
             @include btnStyle;
             height: 50px;

@@ -6,7 +6,7 @@ const ui = {
   about: {resource: '/about', link:'about', iconName: 'help' }
 }
 
-export default ({ user, signOut }) => {
+export default ({ user, signOut, admin }) => {
   const { displayName, email, emailVerified, photoURL, uid, providerData } = user;
   const links = [ui.home, ui.about];
   const listItems = links.map(currentItem => {
@@ -26,6 +26,9 @@ export default ({ user, signOut }) => {
           {listItems}
         </ul>
         <div className="user-info">
+          {
+            admin ? <p style={adminInfo}>Admin View</p> : null
+          }
           <p>{`Hello ${displayName}`}</p>
           <img src={photoURL} className="user-pic" />
           <button onClick={signOut}>Sign Out</button>
@@ -37,6 +40,11 @@ export default ({ user, signOut }) => {
 
 const linkStyle = {
   textTransform: 'capitalize',
+}
+
+const adminInfo = {
+  marginLeft: 'auto',
+  marginRight: 'auto',
 }
 
 const listItemStyle = {

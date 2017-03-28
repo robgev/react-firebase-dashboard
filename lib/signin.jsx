@@ -30,6 +30,10 @@ class SigninBox extends Component {
     this.props.signUp(email, password);
   }
 
+  passwordReset = () => {
+    console.log("In") // Again thinking of the way
+  }
+
   render() {
     const { email, password } = this.state;
     return (
@@ -40,6 +44,7 @@ class SigninBox extends Component {
           <input type='password' placeholder='Password'  onChange={this.passChangeHandler} />
           <button onClick={this.handleSignIn}>Sign In</button>
           <button onClick={this.handleSignUp}>Sign Up</button>
+          <a className="forgot" onClick={this.passwordReset}>Forgot Password?</a>
         </div>
       </div>
     );

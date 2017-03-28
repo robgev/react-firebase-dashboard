@@ -20,7 +20,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentUser: null,
+      currentUser: {}, // to avoid first un-signed in render when some1 is signed in
     }
   }
 
@@ -59,6 +59,7 @@ class App extends Component {
                   <SigninBox
                     submit={auth.handleSignIn}
                     signUp={auth.handleSignUp}
+                    passwordReset={auth.sendPasswordReset}
                     {...props}
                   /> :
                   <Redirect to="/user"/>
@@ -87,6 +88,12 @@ class App extends Component {
                   currentUser ?
                   <AdminPanel
                     user = {currentUser}
+                    signOut={auth.handleSignOut}
+                    changePass={auth.changePass}
+                    deleteUser={auth.deleteUser}
+                    updateName={auth.updateName}
+                    updateEmail={auth.updateEmail}
+                    updatePhoto={auth.updatePhoto}
                     {...props}
                   /> :
                   <Redirect to="/signin"/>

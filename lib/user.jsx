@@ -16,8 +16,15 @@ class User extends Component {
     }
   }
 
-  showBanner = () => {
-    this.setState({...this.state, showBanner: true})
+  notifyAndReset = () => {
+    this.setState({
+      ...this.state, // Don't need this this time but whatever
+      showBanner: true,
+      email: '',
+      name: '',
+      password: '',
+      newPassword: ''
+    })
     setTimeout(() => {
       this.setState({...this.state, showBanner: false})
     }, 3000)
@@ -68,7 +75,7 @@ class User extends Component {
       shouldShowBanner = true;
     }
     if(shouldShowBanner) {
-      this.showBanner();
+      this.notifyAndReset();
     }
   }
 
@@ -80,6 +87,7 @@ class User extends Component {
       <div className="userContainer full-width">
         <Header
           user={user}
+          admin={false}
           signOut={this.props.signOut}
         />
         {
@@ -98,6 +106,7 @@ class User extends Component {
             <div className="form-group">
               <label htmlFor="displayName">Change display name:</label>
               <input
+                value={this.state.name}
                 type='text'
                 id="displayName"
                 onChange={this.handleNameChange}
@@ -107,6 +116,7 @@ class User extends Component {
             <div className="form-group">
               <label htmlFor="email">Change e-mail:</label>
               <input
+                value={this.state.email}
                 type='email'
                 id="email"
                 onChange={this.handleMailChange}
@@ -117,12 +127,14 @@ class User extends Component {
               <label htmlFor="password">Change password:</label>
               <div className="form-password">
                 <input
+                  value={this.state.password}
                   type='password'
                   id="password"
                   onChange={this.handlePassChange}
                   placeholder='Old Password'
                 />
                 <input
+                  value={this.state.newPassword}
                   type='password'
                   onChange={this.handleNewPassChange}
                   placeholder='New Password'
