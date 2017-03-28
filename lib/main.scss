@@ -5,6 +5,8 @@ $listItemSize: 19px;
 $textColor : #464646;
 $backColor : #F2F2F2;
 $borderColor : #BCBCBC;
+$mGreen : #43A047;
+$mRed : #E57373;
 
 * {
   font-family: $font;
@@ -22,7 +24,7 @@ html, body {
   display: flex;
   justify-content: flex-end;
 }
-
+#E57373
 .divisor {
   border-right: 1px solid #E6E7E8;
 }
@@ -93,6 +95,19 @@ a {
       width: 100%;
     }
     .userContainer {
+      .banner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        height: 50px;
+        margin: 20px auto;
+        position: absolute;
+        left: 0;
+        right: 0;
+        color: white;
+        background-color: $mGreen;
+      }
       .user-body {
         @include centered;
         justify-content: space-around;
@@ -106,7 +121,8 @@ a {
           }
           button {
             @include btnStyle;
-            background-color: #E57373;
+            background-color: $mRed;
+            color: white;
             height: 50px;
             font-size: 25px;
             width: 50%
@@ -121,6 +137,30 @@ a {
             @include btnStyle;
             height: 50px;
             width: 30%;
+          }
+          .form-group {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            label {
+              display: flex;
+              flex: 3;
+            }
+            input {
+              display: flex;
+              flex: 8;
+            }
+            .form-password {
+              display: flex;
+              flex: 8;
+              input {
+                display: flex;
+                flex: 1;
+                &#password {
+                  margin-right: 5px;
+                }
+              }
+            }
           }
         }
       }

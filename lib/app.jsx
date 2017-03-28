@@ -9,7 +9,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import signin from './firebaseSigninAPI';
+import auth from './firebaseAPI';
 import SigninBox from './signin';
 import AdminPanel from './admin';
 import User from './user';
@@ -57,8 +57,8 @@ class App extends Component {
                 render={ props =>
                   !currentUser ?
                   <SigninBox
-                    submit={signin.handleSignIn}
-                    signUp={signin.handleSignUp}
+                    submit={auth.handleSignIn}
+                    signUp={auth.handleSignUp}
                     {...props}
                   /> :
                   <Redirect to="/user"/>
@@ -70,7 +70,12 @@ class App extends Component {
                   currentUser ?
                   <User
                     user = {currentUser}
-                    signOut={signin.handleSignOut}
+                    signOut={auth.handleSignOut}
+                    changePass={auth.changePass}
+                    deleteUser={auth.deleteUser}
+                    updateName={auth.updateName}
+                    updateEmail={auth.updateEmail}
+                    updatePhoto={auth.updatePhoto}
                     {...props}
                   /> :
                   <Redirect to="/signin"/>  //avoiding unauthorized render messing up
