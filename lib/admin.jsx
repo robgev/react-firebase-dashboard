@@ -92,47 +92,102 @@ class AdminPanel extends Component {
         }
         <div className="admin-body">
           <div className="buttons">
-            <button onClick={this.submitData}>Save</button>
+            <button onClick={this.submitData}>Deactivate</button>
             <button onClick={this.submitData}>Add</button>
             <button onClick={this.submitData}>Edit</button>
             <button onClick={this.submitData}>Delete</button>
           </div>
           <div className="table-body">
-            <div className="form-group">
-              <label htmlFor="displayName">Change display name:</label>
+            <div className="toolbar">
+              <i className="material-icons">search</i>
               <input
                 type='text'
-                id="displayName"
-                onChange={this.handleNameChange}
-                placeholder={displayName}
+                className='search'
+                placeholder=' Search by email address or user UID '
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="email">Change e-mail:</label>
-              <input
-                type='email'
-                id="email"
-                onChange={this.handleMailChange}
-                placeholder={email}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Change password:</label>
-              <div className="form-password">
-                <input
-                  type='password'
-                  id="password"
-                  onChange={this.handlePassChange}
-                  placeholder='Old Password'
-                />
-                <input
-                  type='password'
-                  onChange={this.handleNewPassChange}
-                  placeholder='New Password'
-                />
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>
+                      <div>
+                        Name
+                        <i className="material-icons">arrow_downward</i>
+                      </div>
+                    </th>
+                    <th>
+                      <div>
+                        Created
+                        <i className="material-icons">arrow_downward</i>
+                      </div>
+                    </th>
+                    <th>
+                      <div>
+                        Email
+                        <i className="material-icons">arrow_downward</i>
+                      </div>
+                    </th>
+                    <th>
+                      <div>
+                        Password
+                        <i className="material-icons">arrow_downward</i>
+                      </div>
+                    </th>
+                    <th>
+                      <div>
+                        Is Admin
+                        <i className="material-icons">arrow_downward</i>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div>
+                        Robert Gevorgyan
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        Date Here
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        robert1999.g@gmail.com
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        myPass
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        true
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="pagination">
+                Rows per page:
+                <div className="pagination-dropdown">
+                  50
+                </div>
+                1-3 of 3
+                <div className="pagination-buttons">
+                  <button>
+                    <i className="material-icons">chevron_left</i>
+                  </button>
+                  <button>
+                    <i className="material-icons">chevron_right</i>
+                  </button>
+                </div>
               </div>
             </div>
-            <button onClick={this.submitData}>Save</button>
           </div>
         </div>
         <Footer />
