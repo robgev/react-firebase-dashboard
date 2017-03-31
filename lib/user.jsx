@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
+import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 import Footer from './components/footer';
 import Header from './components/header';
 
@@ -12,7 +13,8 @@ class User extends Component {
       name: '',
       password: '',
       newPassword: '',
-      showBanner: false,
+      showBanner : false,
+      showAccDeleteModal : false,
     }
   }
 
@@ -51,7 +53,10 @@ class User extends Component {
   }
 
   deleteAccount = () => { // Should think about a way of implementing
-    const { deleteUser } = this.props; // Popup, modal smth else?
+    const { deleteUser } = this.props;
+    const { password } = this.state;
+    deleteUser(password);
+    this.delAccModalClose();
   }
 
   updatePhoto = () => { // Should think about a way of implementing
@@ -79,8 +84,16 @@ class User extends Component {
     }
   }
 
+  delAccModalClose = () => {
+    this.setState({...this.state, showAccDeleteModal: false});
+  }
+
+  delAccModalShow = () => {
+    this.setState({...this.state, showAccDeleteModal: true});
+  }
+
   render() {
-    const { showBanner } = this.state;
+    const { showBanner, showAccDeleteModal } = this.state;
     const { user, admin } = this.props;
     const { displayName, email, emailVerified, photoURL, uid, providerData } = user;
     return (
@@ -100,7 +113,24 @@ class User extends Component {
         <div className="user-body">
           <div className="image">
             <img src={photoURL} />
-            <button>Delete Account</button>
+            <button onClick={this.delAccModalShow}>Delete Account</button>
+              {
+                showAccDeleteModal &&
+                <ModalContainer onClose={this.delAccModalClose}>
+                  <ModalDialog onClose={this.delAccModalClose} className="modal-dialog">
+                    <h1>Confirm account deletion</h1>
+                    <p>We need your password to delete your account</p>
+                    <input
+                      type='password'
+                      onChange={this.handlePassChange}
+                      placeholder='Password'
+                    />
+                    <button
+                      onClick={this.deleteAccount}
+                      className="deleteBtn">Delete my account</button>
+                  </ModalDialog>
+                </ModalContainer>
+              }
           </div>
           <div className="editableData">
             <div className="form-group">
@@ -127,7 +157,7 @@ class User extends Component {
               <label htmlFor="password">Change password:</label>
               <div className="form-password">
                 <input
-                  value={this.state.password}
+                  value={ showAccDeleteModal ? '' : this.state.password}
                   type='password'
                   id="password"
                   onChange={this.handlePassChange}

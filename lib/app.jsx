@@ -30,11 +30,29 @@ class App extends Component {
     firebase.auth().onAuthStateChanged(currentUser => {
       if (currentUser) {
         const { displayName, email, emailVerified, photoURL, uid, providerData } = currentUser;
+        if (displayName === null) {
+          const newName = email.split("@")[0];
+          currentUser.updateProfile({
+            displayName: newName,
+          })
+          .then(() => this.setState({...this.state, currentUser}))
+          .catch(error => console.log)
+
+        }
+        if (photoURL === null) {
+          currentUser.updateProfile({
+            photoURL: "/profile.svg",
+          })
+          .then(() => this.setState({...this.state, currentUser}))
+          .catch(error => console.log)
+        }
         const dbRef = firebase.database().ref(`users/${uid}`)
         const promise = dbRef.once('value')
         promise.then(snapshot => {
-          const { isAdmin } = snapshot.val();
-          this.setState({...this.state, isAdmin})
+          if(snapshot.val()) {
+            const { isAdmin } = snapshot.val();
+            this.setState({...this.state, isAdmin})
+          }
         });
         this.setState({...this.state, promise, currentUser})
       }
@@ -47,7 +65,6 @@ class App extends Component {
 
   render() {
     const { currentUser, isAdmin, promise } = this.state;
-    console.log(isAdmin)
     return (
       <div className='container'>
         <Router>
@@ -82,22 +99,21 @@ class App extends Component {
                       <LoadingScreen
                         promise={ promise }
                         whenResolved={ snapshot => {
-                          const { isAdmin } = snapshot.val();
-                          if(isAdmin) {
-                            return (
-                              <User
-                                user = {currentUser}
-                                signOut={auth.handleSignOut}
-                                changePass={auth.changePass}
-                                deleteUser={auth.deleteUser}
-                                updateName={auth.updateName}
-                                updateEmail={auth.updateEmail}
-                                updatePhoto={auth.updatePhoto}
-                                admin={isAdmin}
-                                {...props}
-                              />
-                            );
-                          }
+                          const value = snapshot.val();
+                          const isAdmin = value ? value.isAdmin : false;
+                          return (
+                            <User
+                              user = {currentUser}
+                              signOut={auth.handleSignOut}
+                              changePass={auth.changePass}
+                              deleteUser={auth.deleteUser}
+                              updateName={auth.updateName}
+                              updateEmail={auth.updateEmail}
+                              updatePhoto={auth.updatePhoto}
+                              admin={isAdmin}
+                              {...props}
+                            />
+                          );
                         }}
                       />
                     );
@@ -117,7 +133,8 @@ class App extends Component {
                         <LoadingScreen
                           promise={ promise }
                           whenResolved={ snapshot => {
-                            const { isAdmin } = snapshot.val();
+                            const value = snapshot.val();
+                            const isAdmin = value ? value.isAdmin : false;
                             if(isAdmin) {
                               return (
                                 <AdminPanel

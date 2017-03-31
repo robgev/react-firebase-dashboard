@@ -44,6 +44,7 @@ export default () => {
 
 const copyright = {
   width: '80%',
+  marginLeft: 'auto',
   textAlign: 'right',
 }
 
@@ -81,7 +82,7 @@ const logoStyle = {
 
 const footer = {
   display: 'flex',
-  padding: '0 5%',
+  padding: '0 3%',
   width: '100%',
   backgroundColor: '#3E424E',
   color: 'white',

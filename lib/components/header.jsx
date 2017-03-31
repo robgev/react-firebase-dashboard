@@ -30,7 +30,7 @@ export default ({ user, signOut, admin }) => {
           {
             admin ? <p style={adminInfo}>Admin View</p> : null
           }
-          <p>{`Hello ${displayName}`}</p>
+          <p>{`Hello, ${displayName}`}</p>
           <img src={photoURL} className="user-pic" />
           <button onClick={signOut}>Sign Out</button>
         </div>

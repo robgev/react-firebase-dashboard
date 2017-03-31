@@ -86,19 +86,25 @@ a {
   display: flex;
   flex-direction: column;
   width: 100%;
-  .signin {
-    @include centered;
-    flex-direction: column;
-    width: 23%;
+  .signin-wrapper {
     height: 100vh;
-    margin: 50px auto;
-    a {
-      display: inline-flex;
-      color: $mBlue;
-      cursor: pointer;
-      &:hover {
-        color: $mBlueHover;
+    .signin {
+      @include centered;
+      flex-direction: column;
+      width: 23%;
+      height: 100vh;
+      margin: 0 auto;
+      a {
+        display: inline-flex;
+        color: $mBlue;
+        cursor: pointer;
+        &:hover {
+          color: $mBlueHover;
+        }
       }
+    }
+    .banner {
+      @include banner;
     }
   }
   h2 {
@@ -364,5 +370,46 @@ a {
       text-align: center;
       line-height: 36px;
     }
+  }
+}
+
+.modal-dialog {
+  @include centered;
+  flex-direction: column;
+  input {
+    background-color: #F5F5F5;
+    outline: none;
+    border: none;
+    width: 100%;
+    font-size: $fontSize;
+    padding: 8px;
+    margin: 20px 0;
+    background-color: $backColor;
+    border: 2px solid #C6C6C6;
+    border-radius: 3px;
+  }
+  button {
+    display: inline-flex;
+    width: 85px;
+    height: 36px;
+    background: 0 0;
+    border: none;
+    border-radius: 2px;
+    color: black;
+    margin: 0;
+    padding: 0 16px;
+    font-family: $font;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    line-height: 36px;
+  }
+  .deleteBtn {
+    width: 175px;
   }
 }
