@@ -13,7 +13,8 @@ import auth from './firebaseAPI';
 import SigninBox from './signin';
 import AdminPanel from './admin';
 import User from './user';
-import NotFound from './components/notfound'
+import NotFound from './components/notfound';
+import LoadingScreen  from './components/loadingscreen'
 import './main.scss';
 
 class App extends Component {
@@ -21,14 +22,21 @@ class App extends Component {
     super();
     this.state = {
       currentUser: {}, // to avoid first un-signed in render when some1 is signed in
+      promise: new Promise(resolve=>{}),
     }
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(currentUser => {
       if (currentUser) {
-        this.setState({...this.state, currentUser})
         const { displayName, email, emailVerified, photoURL, uid, providerData } = currentUser;
+        const dbRef = firebase.database().ref(`users/${uid}`)
+        const promise = dbRef.once('value')
+        promise.then(snapshot => {
+          const { isAdmin } = snapshot.val();
+          this.setState({...this.state, isAdmin})
+        });
+        this.setState({...this.state, promise, currentUser})
       }
       else {
         const currentUser = null;
@@ -38,7 +46,8 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser } = this.state;
+    const { currentUser, isAdmin, promise } = this.state;
+    console.log(isAdmin)
     return (
       <div className='container'>
         <Router>
@@ -67,36 +76,78 @@ class App extends Component {
               />
               <Route
                 path="/user"
-                render={ props =>
-                  currentUser ?
-                  <User
-                    user = {currentUser}
-                    signOut={auth.handleSignOut}
-                    changePass={auth.changePass}
-                    deleteUser={auth.deleteUser}
-                    updateName={auth.updateName}
-                    updateEmail={auth.updateEmail}
-                    updatePhoto={auth.updatePhoto}
-                    {...props}
-                  /> :
-                  <Redirect to="/signin"/>  //avoiding unauthorized render messing up
-                }
+                render={ props => {
+                  if(currentUser) {
+                    return(
+                      <LoadingScreen
+                        promise={ promise }
+                        whenResolved={ snapshot => {
+                          const { isAdmin } = snapshot.val();
+                          if(isAdmin) {
+                            return (
+                              <User
+                                user = {currentUser}
+                                signOut={auth.handleSignOut}
+                                changePass={auth.changePass}
+                                deleteUser={auth.deleteUser}
+                                updateName={auth.updateName}
+                                updateEmail={auth.updateEmail}
+                                updatePhoto={auth.updatePhoto}
+                                admin={isAdmin}
+                                {...props}
+                              />
+                            );
+                          }
+                        }}
+                      />
+                    );
+                  }
+                  else {
+                    return (
+                      <Redirect to="/signin"/>
+                    );
+                  }
+                }}
               />
               <Route
                 path="/admin"
-                render={ props =>
-                  currentUser ?
-                  <AdminPanel
-                    user = {currentUser}
-                    signOut={auth.handleSignOut}
-                    changePass={auth.changePass}
-                    deleteUser={auth.deleteUser}
-                    updateName={auth.updateName}
-                    updateEmail={auth.updateEmail}
-                    updatePhoto={auth.updatePhoto}
-                    {...props}
-                  /> :
-                  <Redirect to="/signin"/>
+                render={ props => {
+                    if(currentUser) {
+                      return(
+                        <LoadingScreen
+                          promise={ promise }
+                          whenResolved={ snapshot => {
+                            const { isAdmin } = snapshot.val();
+                            if(isAdmin) {
+                              return (
+                                <AdminPanel
+                                  user = {currentUser}
+                                  signOut={auth.handleSignOut}
+                                  changePass={auth.changePass}
+                                  deleteUser={auth.deleteUser}
+                                  updateName={auth.updateName}
+                                  updateEmail={auth.updateEmail}
+                                  updatePhoto={auth.updatePhoto}
+                                  admin={isAdmin}
+                                  {...props}
+                                />
+                              );
+                            }
+                            else {
+                              return (
+                                <Route component={NotFound} />
+                              );
+                            }
+                          }}
+                        />
+                      );
+                    }
+                    else {
+                      return (
+                        <Redirect to="/signin"/>
+                      );
+                    }
+                  }
                 }
               />
               <Route component={NotFound} />

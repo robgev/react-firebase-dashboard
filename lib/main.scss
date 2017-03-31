@@ -304,6 +304,7 @@ a {
                   height: 40px;
                   margin: 0 6px;
                   padding: 8px;
+                  outline: none;
                   border-radius: 50%;
                   background-color: $tableBackgroundColor;
                   .material-icons {
@@ -315,6 +316,13 @@ a {
             }
           }
         }
+      }
+    }
+    .loading-screen {
+      @include centered;
+      height: 100vh;
+      img {
+        height: 50vh;
       }
     }
     .user-info {

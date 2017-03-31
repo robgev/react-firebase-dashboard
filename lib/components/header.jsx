@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 
 const ui = {
   home:  {resource: '/',      link:'home',  iconName: 'home' },
-  about: {resource: '/about', link:'about', iconName: 'help' }
+  about: {resource: '/about', link:'about', iconName: 'help' },
+  admin: {resource: '/admin', link:'admin', iconName: 'vpn_key'}
 }
 
 export default ({ user, signOut, admin }) => {
   const { displayName, email, emailVerified, photoURL, uid, providerData } = user;
-  const links = [ui.home, ui.about];
+  const links = admin ? [ui.home, ui.about, ui.admin] : [ui.home, ui.about];
   const listItems = links.map(currentItem => {
     return (
       <li key={currentItem.resource} style={listItemStyle}>

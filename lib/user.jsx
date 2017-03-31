@@ -81,13 +81,13 @@ class User extends Component {
 
   render() {
     const { showBanner } = this.state;
-    const { user } = this.props;
+    const { user, admin } = this.props;
     const { displayName, email, emailVerified, photoURL, uid, providerData } = user;
     return (
       <div className="userContainer full-width">
         <Header
           user={user}
-          admin={false}
+          admin={admin}
           signOut={this.props.signOut}
         />
         {
