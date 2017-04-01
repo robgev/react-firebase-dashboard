@@ -330,6 +330,12 @@ a {
       img {
         height: 50vh;
       }
+      &.users {
+        height: 100%;
+        img {
+          height: 20vh;
+        }
+      }
     }
     .user-info {
       display: flex;

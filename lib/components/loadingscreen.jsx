@@ -31,11 +31,7 @@ class LoadingScreen extends Component {
     if (this.props.promise == {})
       return null;
     if (this.state.promiseState == 'pending')
-      return (
-        <div className="loading-screen">
-          <img src="/loading.gif" />
-        </div>
-      );
+      return this.props.whenPending();
     if (this.state.promiseState == 'rejected')
       return (
         <div>Error: {this.state.error}</div>

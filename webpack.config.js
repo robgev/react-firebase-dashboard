@@ -1,4 +1,4 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin"); //for future usage
+  const ExtractTextPlugin = require("extract-text-webpack-plugin"); //for future usage
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -26,7 +26,13 @@ module.exports = {
         loader: 'babel-loader',
         exclude:/node_modules/,
         query: {
-          presets: ['es2015', 'react', 'stage-2']
+          presets: ['es2015', 'react', 'stage-2'],
+          plugins:[
+      	    'transform-class-properties',
+            'transform-async-to-generator',
+      	    // This is for async, await on the front end.
+      	    'transform-runtime'
+      	  ],
         }
       }
     ],

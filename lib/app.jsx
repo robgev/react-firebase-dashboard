@@ -32,7 +32,7 @@ class App extends Component {
         const { displayName, email, emailVerified, photoURL, uid, providerData } = currentUser;
         if (displayName === null) {
           const newName = email.split("@")[0];
-          currentUser.updateProfile({
+          user.updateProfile({
             displayName: newName,
           })
           .then(() => this.setState({...this.state, currentUser}))
@@ -40,7 +40,7 @@ class App extends Component {
 
         }
         if (photoURL === null) {
-          currentUser.updateProfile({
+          user.updateProfile({
             photoURL: "/profile.svg",
           })
           .then(() => this.setState({...this.state, currentUser}))
@@ -48,12 +48,6 @@ class App extends Component {
         }
         const dbRef = firebase.database().ref(`users/${uid}`)
         const promise = dbRef.once('value')
-        promise.then(snapshot => {
-          if(snapshot.val()) {
-            const { isAdmin } = snapshot.val();
-            this.setState({...this.state, isAdmin})
-          }
-        });
         this.setState({...this.state, promise, currentUser})
       }
       else {
@@ -98,6 +92,13 @@ class App extends Component {
                     return(
                       <LoadingScreen
                         promise={ promise }
+                        whenPending= { () => {
+                          return (
+                            <div className="loading-screen">
+                              <img src="/loading.gif" />
+                            </div>
+                          );
+                        }}
                         whenResolved={ snapshot => {
                           const value = snapshot.val();
                           const isAdmin = value ? value.isAdmin : false;
@@ -132,6 +133,13 @@ class App extends Component {
                       return(
                         <LoadingScreen
                           promise={ promise }
+                          whenPending= { () => {
+                            return (
+                              <div className="loading-screen">
+                                <img src="/loading.gif" />
+                              </div>
+                            );  
+                          }}
                           whenResolved={ snapshot => {
                             const value = snapshot.val();
                             const isAdmin = value ? value.isAdmin : false;
@@ -139,6 +147,7 @@ class App extends Component {
                               return (
                                 <AdminPanel
                                   user = {currentUser}
+                                  dbRef = {firebase.database().ref('users')}
                                   signOut={auth.handleSignOut}
                                   changePass={auth.changePass}
                                   deleteUser={auth.deleteUser}

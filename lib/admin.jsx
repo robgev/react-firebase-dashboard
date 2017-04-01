@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import Footer from './components/footer';
 import Header from './components/header';
+import LoadingScreen from './components/loadingscreen';
 
 export default
 class AdminPanel extends Component {
@@ -70,6 +71,61 @@ class AdminPanel extends Component {
     if(shouldShowBanner) {
       this.showBanner();
     }
+  }
+
+  getUsersData = () => {
+    const { user, dbRef } = this.props;
+    const promise = dbRef.once('value');
+    return (
+      <tbody>
+        <LoadingScreen
+          promise={ promise }
+          whenPending= { () => {
+            return (
+              <tr>
+                <td colSpan="5">
+                  <div className="loading-screen users">
+                    <img src="/loadingSmall.gif" />
+                  </div>
+                </td>
+              </tr>
+            )
+          }}
+          whenResolved={ snapshot => {
+            const value = snapshot.val();
+            return (
+              <tr>
+                <td>
+                  <div>
+                    Robert Gevorgyan
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    Date Here
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    robert1999.g@gmail.com
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    myPass
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    true
+                  </div>
+                </td>
+              </tr>
+            );
+          }}
+        />
+      </tbody>
+    );
   }
 
   render() {
@@ -142,35 +198,7 @@ class AdminPanel extends Component {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div>
-                        Robert Gevorgyan
-                      </div>
-                    </td>
-                    <td>
-                      <div>
-                        Date Here
-                      </div>
-                    </td>
-                    <td>
-                      <div>
-                        robert1999.g@gmail.com
-                      </div>
-                    </td>
-                    <td>
-                      <div>
-                        myPass
-                      </div>
-                    </td>
-                    <td>
-                      <div>
-                        true
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
+                { this.getUsersData() }
               </table>
               <div className="pagination">
                 Rows per page:
