@@ -32,7 +32,7 @@ class App extends Component {
         const { displayName, email, emailVerified, photoURL, uid, providerData } = currentUser;
         if (displayName === null) {
           const newName = email.split("@")[0];
-          user.updateProfile({
+          currentUser.updateProfile({
             displayName: newName,
           })
           .then(() => this.setState({...this.state, currentUser}))
@@ -40,7 +40,7 @@ class App extends Component {
 
         }
         if (photoURL === null) {
-          user.updateProfile({
+          currentUser.updateProfile({
             photoURL: "/profile.svg",
           })
           .then(() => this.setState({...this.state, currentUser}))
@@ -138,7 +138,7 @@ class App extends Component {
                               <div className="loading-screen">
                                 <img src="/loading.gif" />
                               </div>
-                            );  
+                            );
                           }}
                           whenResolved={ snapshot => {
                             const value = snapshot.val();
