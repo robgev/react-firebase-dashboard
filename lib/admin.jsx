@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import Footer from './components/footer';
 import Header from './components/header';
 import LoadingScreen from './components/loadingscreen';
+import _ from 'lodash';
 
 export default
 class AdminPanel extends Component {
@@ -14,13 +15,15 @@ class AdminPanel extends Component {
       password: '',
       newPassword: '',
       showBanner: false,
+      selectedUser: '',
+      bannerText: ''
     }
   }
 
-  showBanner = () => {
-    this.setState({...this.state, showBanner: true})
+  showBanner = (bannerText) => {
+    this.setState({...this.state, showBanner: true, bannerText})
     setTimeout(() => {
-      this.setState({...this.state, showBanner: false})
+      this.setState({...this.state, showBanner: false, bannerText: ''})
     }, 3000)
   }
 
@@ -55,7 +58,7 @@ class AdminPanel extends Component {
   submitData = () => {
     const { changePass, updateName, updateEmail } = this.props;
     const { email, password, newPassword, name } = this.state;
-    let shouldShowBanner = false;
+    let shouldShowBanner = true;
     if(email.trim()) {
       updateEmail(email);
       shouldShowBanner = true;
@@ -73,63 +76,85 @@ class AdminPanel extends Component {
     }
   }
 
+  disableUser = () => {
+    const { toggleUserActiveState } = this.props;
+    const { selectedUser } = this.state;
+    toggleUserActiveState(selectedUser);
+    this.showBanner('User was disabled');
+  }
+
+  handleSelected = (uid, e) => {
+    this.setState({ ...this.state, selectedUser: uid })
+  }
+
   getUsersData = () => {
     const { user, dbRef } = this.props;
     const promise = dbRef.once('value');
     return (
-      <tbody>
         <LoadingScreen
           promise={ promise }
           whenPending= { () => {
             return (
-              <tr>
-                <td colSpan="5">
-                  <div className="loading-screen users">
-                    <img src="/loadingSmall.gif" />
-                  </div>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td colSpan="5">
+                    <div className="loading-screen users">
+                      <img src="/loadingSmall.gif" />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
             )
           }}
           whenResolved={ snapshot => {
             const value = snapshot.val();
+            const renderElms = _.map(value, (currentUserData, idx) => {
+              const isSelected = this.state.selectedUser === idx ? 'selected' : '';
+              return (
+                <tr
+                  key={idx}
+                  onClick={this.handleSelected.bind(this, idx)}
+                  className={isSelected}>
+                  <td className={'row-cell'}>
+                    <div>
+                      {currentUserData.username}
+                    </div>
+                  </td>
+                  <td className={'row-cell'}>
+                    <div>
+                      {currentUserData.created}
+                    </div>
+                  </td>
+                  <td className={'row-cell'}>
+                    <div>
+                      {currentUserData.email}
+                    </div>
+                  </td>
+                  <td className={'row-cell'}>
+                    <div>
+                      {currentUserData.password}
+                    </div>
+                  </td>
+                  <td className={'row-cell'}>
+                    <div>
+                      {currentUserData.isAdmin ? 'true' : 'false'}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })
             return (
-              <tr>
-                <td>
-                  <div>
-                    Robert Gevorgyan
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    Date Here
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    robert1999.g@gmail.com
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    myPass
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    true
-                  </div>
-                </td>
-              </tr>
+              <tbody>
+                {renderElms}
+              </tbody>
             );
           }}
         />
-      </tbody>
     );
   }
 
   render() {
-    const { showBanner } = this.state;
+    const { showBanner, bannerText } = this.state;
     const { user } = this.props;
     const { displayName, email, emailVerified, photoURL, uid, providerData } = user;
     return (
@@ -139,16 +164,13 @@ class AdminPanel extends Component {
           admin={true}
           signOut={this.props.signOut}
         />
-        {
-          showBanner ?
-          <div className="banner">
-            Saved Sucessfully
-          </div>
-          : null
-        }
         <div className="admin-body">
           <div className="buttons">
-            <button onClick={this.submitData}>Deactivate</button>
+            {
+              showBanner &&
+              <div className="success">{bannerText}</div>
+            }
+            <button onClick={this.disableUser}>Deactivate</button>
             <button onClick={this.submitData}>Add</button>
             <button onClick={this.submitData}>Edit</button>
             <button onClick={this.submitData}>Delete</button>
